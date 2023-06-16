@@ -409,7 +409,7 @@
             // masukkan kode summernote
             $('#summernote').summernote({
                 tabsize: 2,
-                height: 100
+                height: 200
             });
 
             // ini kode untuk yang format rupiah

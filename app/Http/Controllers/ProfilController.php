@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use finfo;
+use Request;
 use App\Models\Profil;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\KontenRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProfilRequest;
 use App\Http\Requests\UpdateProfilRequest;
+
+
 
 class ProfilController extends Controller
 {
@@ -39,40 +47,83 @@ class ProfilController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProfilRequest $request)
+    public function store(KontenRequest $request)
     {
-        //
-    }
+        $requestData = $request->validate([
+            'kategori' => 'required',
+            'judul' => 'required',
+            'konten' => 'required',
+            ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Profil $profil)
-    {
-        //
-    }
+            $konten = $requestData['konten'];
+            $pattern = '/<img.*?src="(data:image\/(.*?);base64,.*?)".*?>/i';
+preg_match_all($pattern, $konten, $matches);
+$gambarBase64 = $matches[1];
+$masjidId = auth()->user()->masjid_id;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Profil $profil)
-    {
-        //
-    }
+foreach ($gambarBase64 as $gambar) {
+$data= explode(',', $gambar);
+$gambarData = $data[1];
+$mime = $data[0];
+$mimeParts = explode('/', $mime);
+$ext = $mimeParts[1];
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProfilRequest $request, Profil $profil)
-    {
-        //
-    }
+// Mendapatkan ekstensi file dari tipe MIME menggunakan pustaka finfo
+$finfo = finfo_open();
+$ext = finfo_buffer($finfo, base64_decode($gambarData), FILEINFO_MIME_TYPE);
+finfo_close($finfo);
+$ext = explode('/', $ext)[1];
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Profil $profil)
-    {
-        //
-    }
+$namaFile = "profil/$masjidId/" . uniqid() . '.' . $ext;
+Storage::disk('public')->put($namaFile, base64_decode($gambarData));
+$namaFile = "/storage/$namaFile";
+$konten = str_replace($gambar, $namaFile, $konten);
+}
+
+// Mengganti nilai konten dengan konten yang telah diubah menjadi URL Gambar
+$requestData['konten'] = $konten;
+
+// Lanjutkan dengan penggunaaan data requestData
+
+// dd($request->konten);
+$requestData['created_by'] = auth()->user()->id;
+$requestData['masjid_id'] = auth()->user()->masjid_id;
+$requestData['slug'] = Str::slug($request->judul);
+Profil::create($requestData);
+
+flash('Data sudah disimpan');
+return back();
+}
+
+/**
+* Display the specified resource.
+*/
+public function show(Profil $profil)
+{
+//
+}
+
+/**
+* Show the form for editing the specified resource.
+*/
+public function edit(Profil $profil)
+{
+//
+}
+
+/**
+* Update the specified resource in storage.
+*/
+public function update(UpdateProfilRequest $request, Profil $profil)
+{
+//
+}
+
+/**
+* Remove the specified resource from storage.
+*/
+public function destroy(Profil $profil)
+{
+//
+}
 }

@@ -28,9 +28,8 @@
 
                     <div class="form-group mb-3">
                         {!! Form::label('konten', 'Konten / Isi Profil') !!}
-                        {!! Form::textarea('keterangan', null, [
+                        {!! Form::textarea('konten', null, [
                             'class' => 'form-control',
-                            'rows' => 3,
                             'placeholder' => 'Isi Profil',
                             'id' => 'summernote',
                         ]) !!}
