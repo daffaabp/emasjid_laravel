@@ -32,6 +32,7 @@
                             'class' => 'form-control',
                             'rows' => 3,
                             'placeholder' => 'Isi Profil',
+                            'id' => 'summernote',
                         ]) !!}
                         <span class="text-danger">{{ $errors->first('konten') }}</span>
                     </div>

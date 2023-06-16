@@ -396,8 +396,23 @@
     <script src="{{ asset('adminkit/js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js  ') }}"></script>
+
+    <!-- include summernote css/js-->
+    <link href="{{ asset('sm/summernote.css') }}" rel="stylesheet">
+    <script src="{{ asset('sm/summernote.js') }}"></script>
+
     <script>
         $(document).ready(function() {
+            // masukkan kode summernote
+            $('#summernote').summernote({
+                tabsize: 2,
+                height: 100
+            });
+
+            // ini kode untuk yang format rupiah
             $('.rupiah').mask("#.##0", {
                 reverse: true
             });
