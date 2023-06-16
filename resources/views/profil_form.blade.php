@@ -10,44 +10,30 @@
                 <div class="card-body">
 
                     {!! Form::model($profil, [
-                        'route' => isset($profil->id) ? ['kas.update', $profil->id] : 'kas.store', // jika id ada nilai, kita akan melakukan update, klo tidak maka kita akan melakukan penyimpanan atau store
-                        'method' => isset($profil->id) ? 'PUT' : 'POST',
+                        'route' => $route,
+                        'method' => $method,
                     ]) !!}
 
                     <div class="form-group mb-3">
                         {!! Form::label('kategori', 'Kategori') !!}
-                        {!! Form::text('kategori', null, ['class' => 'form-control', 'placeholder' => 'Kategori']) !!}
+                        {!! Form::select('kategori', $listKategori, null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{{ $errors->first('kategori') }}</span>
                     </div>
 
                     <div class="form-group mb-3">
-                        {!! Form::label('keterangan', 'Keterangan') !!}
+                        {!! Form::label('judul', 'Judul') !!}
+                        {!! Form::text('judul', null, ['class' => 'form-control']) !!}
+                        <span class="text-danger">{{ $errors->first('judul') }}</span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {!! Form::label('konten', 'Konten / Isi Profil') !!}
                         {!! Form::textarea('keterangan', null, [
                             'class' => 'form-control',
-                            'rows' => 4,
-                            'placeholder' => 'Keterangan',
+                            'rows' => 3,
+                            'placeholder' => 'Isi Profil',
                         ]) !!}
-                        <span class="text-danger">{{ $errors->first('keterangan') }}</span>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('jenis', 'Jenis Transaksi') !!}
-                        <div class="form-check mb-2 mt-2">
-                            {!! Form::radio('jenis', 'masuk', 1, ['class' => 'form-check-input', 'id' => 'jenis_masuk']) !!}
-                            {!! Form::label('jenis_masuk', 'Pemasukan', ['class' => 'form-check-label']) !!}
-                        </div>
-                        <div class="form-check">
-                            {!! Form::radio('jenis', 'keluar', null, ['class' => 'form-check-input', 'id' => 'jenis_keluar']) !!}
-                            {!! Form::label('jenis_keluar', 'Pengeluaran', ['class' => 'form-check-label']) !!}
-                        </div>
-                        <span class="text-danger ">{{ $errors->first('jenis') }}</span>
-                    </div>
-
-
-                    <div class="form-group mb-3">
-                        {!! Form::label('jumlah', 'Jumlah Transaksi') !!}
-                        {!! Form::number('jumlah', null, ['class' => 'form-control rupiah', 'placeholder' => 'Jumlah']) !!}
-                        <span class="text-danger ">{{ $errors->first('jumlah') }}</span>
+                        <span class="text-danger">{{ $errors->first('konten') }}</span>
                     </div>
 
                     {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}

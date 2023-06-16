@@ -51,14 +51,14 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item" {{ Route::is('kas.*') ? 'active' : '' }}>
+                    <li class="sidebar-item {{ Route::is('kas.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kas.index') }}">
                             <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Kas
                                 Masjid</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item" {{ Route::is('profil.*') ? 'active' : '' }}>
+                    <li class="sidebar-item {{ Route::is('profil.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('profil.index') }}">
                             <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Profil
                                 Masjid</span>

@@ -22,9 +22,18 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        $profil = new Profil();
-        $disable = [];
-        return view('profil_form', compact('profil'));
+        // gaya penulisan yang berbeda dari biasanya dapat dilakukan seperti dibawah ini
+        $data['profil'] = new Profil();
+        $data['route'] = 'profil.store';
+        $data['method'] = 'POST';
+
+        // kategori ini akan kita buat berupa pilihan atau select
+        $data['listKategori'] = [
+            'visi-misi' => 'Visi Misi',
+            'sejarah' => 'Sejarah',
+            'struktur-organisasi' => 'Struktur Organisasi',
+        ];
+        return view('profil_form', $data);
     }
 
     /**
