@@ -1,20 +1,21 @@
 @extends('layouts.app_adminkit')
 
 @section('content')
-    <h1 class="h3 mb-3">Informasi Masjid</h1>
+    <h1 class="h3 mb-3">{{ $title }}</h1>
     <div class="row">
         <div class="card">
             <div class="card-body">
                 <div class="col-md-6 text-right mt-3 mb-3">
-                    <a href="{{ route('informasi.create') }}" class="btn btn-primary">Tambah Informasi Baru</a>
+                    <a href="{{ route('masjidbank.create') }}" class="btn btn-primary">Tambah Data</a>
                 </div>
                 <table class="{{ config('app.table_style') }}">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Informasi</th>
-                            <th>Diinput Oleh</th>
-                            <th>Aksi</th>
+                            <th>BANK</th>
+                            <th>NO. REKENING</th>
+                            <th>AN. REKENING</th>
+                            <th>AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,19 +23,16 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>
-                                    <div class="fw-bold">{{ $item->judul }}</div>
-                                    {{ strip_tags($item->konten) }}
+                                    <div class="fw-bold">{{ $item->nama_bank }}</div>
                                 </td>
-
-                                <td>{{ $item->createdBy->name }}</td>
+                                <td>{{ $item->nomor_rekening }}</td>
+                                <td>{{ $item->nama_rekening }}</td>
                                 <td>
-                                    <a href="{{ route('informasi.edit', $item->id) }}"
+                                    <a href="{{ route('masjidbank.edit', $item->id) }}"
                                         class="btn btn-sm btn-warning mb-1 mx-1">Edit</a>
-                                    <a href="{{ route('informasi.show', $item->id) }}"
-                                        class="btn btn-sm btn-primary mb-1 mx-1">Detail</a>
                                     {!! Form::open([
                                         'method' => 'DELETE',
-                                        'route' => ['informasi.destroy', $item->id],
+                                        'route' => ['masjidbank.destroy', $item->id],
                                         'style' => 'display:inline',
                                     ]) !!}
                                     @csrf

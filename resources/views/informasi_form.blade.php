@@ -3,7 +3,7 @@
 @extends('layouts.app_adminkit')
 
 @section('content')
-    <h1>{{ $title }}</h1>
+    <h1 class="h3 mb-3">{{ $title }}</h1>
     <div class="row">
         <div class="col">
             <div class="card">
@@ -14,7 +14,7 @@
                         'method' => $method,
                     ]) !!}
 
-                    <div class="form-group mb-3 d-none">
+                    <div class="form-group mb-3">
                         {!! Form::label('kategori', 'Kategori') !!}
                         {!! Form::select('kategori', $listKategori, null, [
                             'class' => 'form-control',

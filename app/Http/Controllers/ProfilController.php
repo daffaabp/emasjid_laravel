@@ -59,7 +59,7 @@ class ProfilController extends Controller
         // lihat di Profil model
 
         Profil::create($requestData);
-        flash('Data sudah disimpan');
+        flash('Data berhasil disimpan');
         return back();
     }
 
@@ -104,7 +104,7 @@ class ProfilController extends Controller
             'konten' => 'required',
             ]);
         $profil->update($requestData);
-        flash('Data berhasil diubah.');
+        flash('Data berhasil diperbarui.');
         return back();
     }
 
@@ -114,7 +114,7 @@ class ProfilController extends Controller
     public function destroy(Profil $profil)
     {
         $profil->delete();
-        flash('Data sudah dihapus');
+        flash('Data berhasil dihapus');
         return back();
     }
 }

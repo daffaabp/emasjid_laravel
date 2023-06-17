@@ -10,8 +10,8 @@
                     <h5 class="card-title mb-0">Selamat Datang {{ auth()->user()->name }}</h5>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-danger" role="alert">
-                        Content
+                    <div class="alert alert-primary" role="alert">
+                        Welcome :))
                     </div>
                 </div>
             </div>

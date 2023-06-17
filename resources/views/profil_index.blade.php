@@ -3,9 +3,9 @@
 @section('content')
     <h1 class="h3 mb-3">{{ $title }}</h1>
     <div class="row">
-        <div class="col-12">
-            <div class="card-header">
-                <div class="col-md-6 text-right mt-3 mx-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-6 text-right mt-3 mb-3">
                     <a href="{{ route('profil.create') }}" class="btn btn-primary">Tambah Profil</a>
                 </div>
                 <table class="{{ config('app.table_style') }}">

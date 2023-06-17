@@ -83,7 +83,7 @@ class KategoriController extends Controller
             'keterangan' => 'nullable',
             ]);
         $kategori->update($requestData);
-        flash('Data berhasil diubah.');
+        flash('Data berhasil diperbarui.');
         return back();
     }
 
@@ -92,6 +92,8 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
-        //
+        $kategori->delete();
+        flash('Data berhasil dihapus');
+        return back();
     }
 }

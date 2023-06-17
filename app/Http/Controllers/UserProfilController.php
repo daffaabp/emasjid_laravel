@@ -24,7 +24,7 @@ class UserProfilController extends Controller
         $user = auth()->user();
         $user->fill($data);
         $user->save();
-        flash('Data Berhasil diubah')->success();
+        flash('Data berhasil diperbarui')->success();
         return back();
     }
 }

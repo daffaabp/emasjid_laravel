@@ -3,10 +3,10 @@
 @section('content')
     <h1 class="h3 mb-3">{{ $title }}</h1>
     <div class="row">
-        <div class="col-12">
-            <div class="card-header">
-                <div class="col-md-6 text-right mt-3 mx-3">
-                    <a href="{{ route('kategori.create') }}" class="btn btn-primary mb-1 mx-1">Tambah Kategori Informasi</a>
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-6 text-right mt-3 mb-3">
+                    <a href="{{ route('kategori.create') }}" class="btn btn-primary">Tambah Kategori Informasi</a>
                 </div>
                 <table class="{{ config('app.table_style') }}">
                     <thead>

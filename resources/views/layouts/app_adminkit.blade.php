@@ -78,6 +78,13 @@
                                 Masjid</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item {{ Route::is('masjidbank.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('masjidbank.index') }}">
+                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data
+                                Bank</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-cta">
@@ -351,8 +358,14 @@
     <link href="{{ asset('sm/summernote.css') }}" rel="stylesheet">
     <script src="{{ asset('sm/summernote.js') }}"></script>
 
+    {{-- Select 2 untuk mengcustom tampilan Dropdown List Data Bank --}}
+    <link href="{{ asset('select2/css/select2.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('select2/js/select2.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
+            $('.select2').select2();
+
             // masukkan kode summernote
             $('#summernote').summernote({
                 tabsize: 2,

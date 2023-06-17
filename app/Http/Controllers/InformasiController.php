@@ -50,7 +50,7 @@ class InformasiController extends Controller
         // lihat di Profil model
 
         Informasi::create($requestData);
-        flash('Data sudah disimpan');
+        flash('Data berhasil disimpan');
         return view('informasi_index', $requestData);
     }
 
@@ -90,7 +90,7 @@ class InformasiController extends Controller
             'konten' => 'required',
             ]);
         $informasi->update($requestData);
-        flash('Data berhasil diubah.');
+        flash('Data berhasil diperbarui.');
         return back();
     }
 
@@ -100,7 +100,7 @@ class InformasiController extends Controller
     public function destroy(Informasi $informasi)
     {
         $informasi->delete();
-        flash('Data sudah dihapus');
+        flash('Data berhasil dihapus');
         return back();
     }
 }
