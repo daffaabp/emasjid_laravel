@@ -8,7 +8,7 @@
                 <div class="col-md-6 text-right mt-3 mx-3">
                     <a href="{{ route('profil.create') }}" class="btn btn-primary">Tambah Profil</a>
                 </div>
-                <table class="table table-striped">
+                <table class="{{ config('app.table_style') }}">
                     <thead>
                         <tr>
                             <th>ID</th>

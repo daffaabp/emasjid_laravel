@@ -5,26 +5,23 @@
     <div class="row">
         <div class="col-12">
             <div class="card-header">
-                <div class="col-md-6 text-right mt-3 mx-3">
-                    <a href="{{ route('profil.create') }}" class="btn btn-primary">Tambah Profil</a>
-                </div>
                 <div class="card-body">
-                    <table class="table table-light">
+                    <table class="table">
                         <tr>
                             <td width="15%">Judul</td>
-                            <td>: {{ $profil->judul }}</td>
+                            <td>: {{ $model->judul }}</td>
                         </tr>
                         <tr>
                             <td>Konten</td>
-                            <td>{!! $profil->konten !!}</td>
+                            <td>{!! $model->konten !!}</td>
                         </tr>
                         <tr>
                             <td>Tanggal Posting</td>
-                            <td>: {!! $profil->created_at->translatedFormat('l, d F Y') !!}</td>
+                            <td>: {!! $model->created_at->translatedFormat('l, d F Y') !!}</td>
                         </tr>
                         <tr>
                             <td>Dibuat Oleh</td>
-                            <td>: {!! $profil->createdBy->name !!}</td>
+                            <td>: {!! $model->createdBy->name !!}</td>
                         </tr>
                     </table>
                 </div>
