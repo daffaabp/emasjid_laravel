@@ -91,15 +91,15 @@ class KasController extends Controller
         return redirect()->route('kas.index')->with('success', 'Data kas berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Kas $ka)
     {
-        $kas = Kas::findOrFail($id);
+        $kas = $ka;
         $saldoAkhir = Kas::SaldoAkhir();
         $disable = ['disabled' => 'disabled'];
         return view('kas_form', compact('kas', 'saldoAkhir', 'disable'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Kas $ka)
     {
         $requestData = $request->validate([
             'kategori' => 'nullable',
@@ -108,7 +108,7 @@ class KasController extends Controller
         ]);
         $jumlah = str_replace('.', '', $requestData['jumlah']);
         $saldoAkhir = Kas::SaldoAkhir();
-        $kas = Kas::findOrFail($id);
+        $kas = $ka;
 
         if ($kas->jenis == 'masuk') {
             $saldoAkhir -= $kas->jumlah;
@@ -126,10 +126,9 @@ class KasController extends Controller
         return redirect()->route('kas.index');
     }
 
-    public function destroy($id)
+    public function destroy(Kas $ka)
     {
-        $kas = Kas::findOrFail($id);
-
+        $kas = $ka;
         $saldoAkhir = Kas::SaldoAkhir();
 
         // Jika membatalkan pemasukkan, maka kas berkurang

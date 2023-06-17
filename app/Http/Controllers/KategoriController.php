@@ -82,9 +82,7 @@ class KategoriController extends Controller
             'nama' => 'required',
             'keterangan' => 'nullable',
             ]);
-
-        $model = Kategori::findOrFail($kategori->id);
-        $model->update($requestData);
+        $kategori->update($requestData);
         flash('Data berhasil diubah.');
         return back();
     }

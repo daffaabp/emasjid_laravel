@@ -30,4 +30,22 @@ trait HasMasjid
     {
         return $this->belongsTo(Masjid::class);
     }
+
+
+     /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    // Disini kita menggunakan salah satu fitur Laravel yaitu Route Model Binding
+    // Tujuannya agar user tidak dapat mengakses data dari profil user lain hanya dengan mengganti nomor ID nya
+    // Route Binding ini dapat kita letakkan di masing-masing Model, atau jika ingin lebih singkatnya bisa kita letakkan di dalam TRAIT nya HasMasjid
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('masjid_id', auth()->user()->masjid_id)
+        ->where('id', $value)
+        ->firstOrFail();
+    }
 }

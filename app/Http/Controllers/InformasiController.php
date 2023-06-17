@@ -89,9 +89,7 @@ class InformasiController extends Controller
             'judul' => 'required',
             'konten' => 'required',
             ]);
-
-        $profil = Informasi::findOrFail($informasi->id);
-        $profil->update($requestData);
+        $informasi->update($requestData);
         flash('Data berhasil diubah.');
         return back();
     }

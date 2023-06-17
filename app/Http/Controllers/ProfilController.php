@@ -78,6 +78,7 @@ class ProfilController extends Controller
     */
     public function edit(Profil $profil) // ini merupakan trik yaitu model bounding
     {
+        // $profil = Profil::where('masjid_id', auth()->user()->masjid_id)->where('id', $id)->firstOrFail();
         $data['profil'] = $profil;
         $data['route'] = ['profil.update', $profil->id];
         $data['method'] = 'PUT';
@@ -102,8 +103,6 @@ class ProfilController extends Controller
             'judul' => 'required',
             'konten' => 'required',
             ]);
-
-        $profil = Profil::findOrFail($profil->id);
         $profil->update($requestData);
         flash('Data berhasil diubah.');
         return back();

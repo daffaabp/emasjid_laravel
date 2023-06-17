@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ConvertContentImageBase64ToUrl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Psy\Command\WhereamiCommand;
 
 class Profil extends Model
 {
@@ -22,4 +23,5 @@ class Profil extends Model
     protected $guarded = [];
 
     // Di dalam profil ini sudah tidak ada relasi, karena relasinya sudah diletakkan di dalam TRAIT semua di bagian HasMasjid
+
 }
