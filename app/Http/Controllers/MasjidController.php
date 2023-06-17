@@ -11,9 +11,6 @@ use App\Http\Requests\UpdateMasjidRequest;
 
 class MasjidController extends Controller
 {
-
-
-
     public function create()
     {
         $masjid = auth()->user()->masjid;

@@ -55,45 +55,17 @@ class ProfilController extends Controller
             'konten' => 'required',
             ]);
 
-            $konten = $requestData['konten'];
-            $pattern = '/<img.*?src="(data:image\/(.*?);base64,.*?)".*?>/i';
-preg_match_all($pattern, $konten, $matches);
-$gambarBase64 = $matches[1];
-$masjidId = auth()->user()->masjid_id;
+        // sebelumnya disini ada proses untuk ConvertImageBase64ToUrl -> dipindahkan menjadi Trait agar bisa dipanggil sewaktu waktu di proses manapun
+        // lihat di Profil model
 
-foreach ($gambarBase64 as $gambar) {
-$data= explode(',', $gambar);
-$gambarData = $data[1];
-$mime = $data[0];
-$mimeParts = explode('/', $mime);
-$ext = $mimeParts[1];
+        $requestData['created_by'] = auth()->user()->id;
+        $requestData['masjid_id'] = auth()->user()->masjid_id;
+        $requestData['slug'] = Str::slug($request->judul);
+        Profil::create($requestData);
 
-// Mendapatkan ekstensi file dari tipe MIME menggunakan pustaka finfo
-$finfo = finfo_open();
-$ext = finfo_buffer($finfo, base64_decode($gambarData), FILEINFO_MIME_TYPE);
-finfo_close($finfo);
-$ext = explode('/', $ext)[1];
-
-$namaFile = "profil/$masjidId/" . uniqid() . '.' . $ext;
-Storage::disk('public')->put($namaFile, base64_decode($gambarData));
-$namaFile = "/storage/$namaFile";
-$konten = str_replace($gambar, $namaFile, $konten);
-}
-
-// Mengganti nilai konten dengan konten yang telah diubah menjadi URL Gambar
-$requestData['konten'] = $konten;
-
-// Lanjutkan dengan penggunaaan data requestData
-
-// dd($request->konten);
-$requestData['created_by'] = auth()->user()->id;
-$requestData['masjid_id'] = auth()->user()->masjid_id;
-$requestData['slug'] = Str::slug($request->judul);
-Profil::create($requestData);
-
-flash('Data sudah disimpan');
-return back();
-}
+        flash('Data sudah disimpan');
+        return back();
+    }
 
 /**
 * Display the specified resource.

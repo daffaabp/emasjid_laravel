@@ -25,8 +25,9 @@
                         @foreach ($profil as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->tanggal->translatedFormat('d-m-Y') }}</td>
-                                <td>{{ $item->kategori ?? 'Umum' }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $item->tanggal)->format('d-m-Y') }}</td> --}}
+                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ $item->kategori ?? 'umum' }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     {{ $item->jenis == 'masuk' ? formatRupiah($item->jumlah) : '-' }}
@@ -34,7 +35,7 @@
                                 <td>
                                     {{ $item->jenis == 'keluar' ? formatRupiah($item->jumlah) : '-' }}
                                 </td>
-                                <td>{{ $item->createdBy->name }}</td>
+                                <td>{{ isset($item->createdBy->name) ? $item->createdBy->name : '' }}</td>
                                 <td>
                                     <a href="{{ route('kas.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                     {!! Form::open([
