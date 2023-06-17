@@ -11,13 +11,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Kategori</th>
-                            <th>Keterangan</th>
-                            <th>Pemasukkan</th>
-                            <th>Pengeluaran</th>
-                            <th>Diinputkan Oleh</th>
+                            <th>ID</th>
+                            <th>Judul</th>
+                            <th>Konten</th>
+                            <th>Diinput Oleh</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -25,22 +22,16 @@
                         @foreach ($profil as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                {{-- <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $item->tanggal)->format('d-m-Y') }}</td> --}}
-                                <td>{{ $item->tanggal }}</td>
-                                <td>{{ $item->kategori ?? 'umum' }}</td>
-                                <td>{{ $item->keterangan }}</td>
+                                <td>{{ $item->judul }}</td>
+                                <td>{{ strip_tags($item->konten) }}</td>
+                                <td>{{ $item->createdBy->name }}</td>
                                 <td>
-                                    {{ $item->jenis == 'masuk' ? formatRupiah($item->jumlah) : '-' }}
-                                </td>
-                                <td>
-                                    {{ $item->jenis == 'keluar' ? formatRupiah($item->jumlah) : '-' }}
-                                </td>
-                                <td>{{ isset($item->createdBy->name) ? $item->createdBy->name : '' }}</td>
-                                <td>
-                                    <a href="{{ route('kas.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('profil.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('profil.show', $item->id) }}"
+                                        class="btn btn-sm btn-warning">Detail</a>
                                     {!! Form::open([
                                         'method' => 'DELETE',
-                                        'route' => ['kas.destroy', $item->id],
+                                        'route' => ['profil.destroy', $item->id],
                                         'style' => 'display:inline',
                                     ]) !!}
                                     @csrf

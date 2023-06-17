@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use finfo;
-use Request;
 use App\Models\Profil;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
@@ -11,6 +10,7 @@ use App\Http\Requests\KontenRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProfilRequest;
 use App\Http\Requests\UpdateProfilRequest;
+use Illuminate\Http\Request;
 
 
 
@@ -58,9 +58,6 @@ class ProfilController extends Controller
         // sebelumnya disini ada proses untuk ConvertImageBase64ToUrl -> dipindahkan menjadi Trait agar bisa dipanggil sewaktu waktu di proses manapun
         // lihat di Profil model
 
-        $requestData['created_by'] = auth()->user()->id;
-        $requestData['masjid_id'] = auth()->user()->masjid_id;
-        $requestData['slug'] = Str::slug($request->judul);
         Profil::create($requestData);
 
         flash('Data sudah disimpan');
@@ -72,23 +69,45 @@ class ProfilController extends Controller
 */
 public function show(Profil $profil)
 {
-//
+    $data['profil'] = $profil;
+    return view('profil_show', $data);
 }
 
 /**
 * Show the form for editing the specified resource.
 */
-public function edit(Profil $profil)
+public function edit(Profil $profil) // ini merupakan trik yaitu model bounding
 {
-//
+    $data['profil'] = $profil;
+    $data['route'] = ['profil.update', $profil->id];
+    $data['method'] = 'PUT';
+
+    // kategori ini akan kita buat berupa pilihan atau select
+    $data['listKategori'] = [
+        'visi-misi' => 'Visi Misi',
+        'sejarah' => 'Sejarah',
+        'struktur-organisasi' => 'Struktur Organisasi',
+    ];
+    return view('profil_form', $data);
 }
 
 /**
 * Update the specified resource in storage.
 */
-public function update(UpdateProfilRequest $request, Profil $profil)
+public function update(Request $request, Profil $profil)
 {
-//
+    $requestData = $request->validate([
+        'kategori' => 'required',
+        'judul' => 'required',
+        'konten' => 'required',
+        ]);
+
+
+    $profil = Profil::findOrFail($profil->id);
+    $profil->update($requestData);
+
+    flash('Data berhasil diubah.');
+    return back();
 }
 
 /**
@@ -96,6 +115,8 @@ public function update(UpdateProfilRequest $request, Profil $profil)
 */
 public function destroy(Profil $profil)
 {
-//
+    $profil->delete();
+    flash('Data sudah dihapus');
+    return back();
 }
 }
