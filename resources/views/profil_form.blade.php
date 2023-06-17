@@ -3,7 +3,7 @@
 @extends('layouts.app_adminkit')
 
 @section('content')
-    <h1>PROFIL MASJID {{ strtoupper(auth()->user()->masjid->nama) }}</h1>
+    <h1>{{ $title }}</h1>
     <div class="row">
         <div class="col">
             <div class="card">

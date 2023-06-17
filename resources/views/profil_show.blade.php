@@ -1,7 +1,7 @@
 @extends('layouts.app_adminkit')
 
 @section('content')
-    <h1 class="h3 mb-3">Profil Masjid</h1>
+    <h1 class="h3 mb-3">{{ $title }}</h1>
     <div class="row">
         <div class="col-12">
             <div class="card-header">
@@ -15,7 +15,7 @@
                             <td>: {{ $profil->judul }}</td>
                         </tr>
                         <tr>
-                            <td>Isi/Konten</td>
+                            <td>Konten</td>
                             <td>: {!! $profil->konten !!}</td>
                         </tr>
                         <tr>

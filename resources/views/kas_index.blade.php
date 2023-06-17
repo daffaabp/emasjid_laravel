@@ -64,15 +64,16 @@
                                         {{ $item->jenis == 'keluar' ? formatRupiah($item->jumlah) : '-' }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('kas.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
                                         {!! Form::open([
                                             'method' => 'DELETE',
                                             'route' => ['kas.destroy', $item->id],
                                             'style' => 'display:inline',
                                         ]) !!}
                                         @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <a href="{{ route('kas.edit', $item->id) }}"
+                                            class="btn btn-sm btn-primary mb-1 mx-1">Edit</a>
+                                        <button type="submit" class="btn btn-sm btn-danger mb-1 mx-1"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus kas ini?')">Hapus</button>
                                         {!! Form::close() !!}
                                     </td>

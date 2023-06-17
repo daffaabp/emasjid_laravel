@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card-header">
                 <div class="col-md-6 text-right mt-3 mx-3">
-                    <a href="{{ route('profil.create') }}" class="btn btn-primary">Tambah Profil</a>
+                    <a href="{{ route('kategori.create') }}" class="btn btn-primary">Tambah Kategori Informasi</a>
                 </div>
                 <table class="table table-striped">
                     <thead>
@@ -22,17 +22,15 @@
                         @foreach ($models as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->judul }}</td>
+                                <td>{{ $item->nama }}</td>
                                 <td>{{ strip_tags($item->konten) }}</td>
                                 <td>{{ $item->createdBy->name }}</td>
                                 <td>
-                                    <a href="{{ route('profil.edit', $item->id) }}"
+                                    <a href="{{ route('kategori.edit', $item->id) }}"
                                         class="btn btn-sm btn-warning mb-1 mx-1">Edit</a>
-                                    <a href="{{ route('profil.show', $item->id) }}"
-                                        class="btn btn-sm btn-primary mb-1 mx-1">Detail</a>
                                     {!! Form::open([
                                         'method' => 'DELETE',
-                                        'route' => ['profil.destroy', $item->id],
+                                        'route' => ['kategori.destroy', $item->id],
                                         'style' => 'display:inline',
                                     ]) !!}
                                     @csrf

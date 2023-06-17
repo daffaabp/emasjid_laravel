@@ -19,8 +19,9 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        $profil = Profil::UserMasjid()->latest()->paginate(50);
-        return view('profil_index', compact('profil'));
+        $models = Profil::UserMasjid()->latest()->paginate(50);
+        $title = 'Profil Masjid';
+        return view('profil_index', compact('models', 'title'));
     }
 
     /**
@@ -39,6 +40,7 @@ class ProfilController extends Controller
             'sejarah' => 'Sejarah',
             'struktur-organisasi' => 'Struktur Organisasi',
         ];
+        $data['title'] = 'Tambah Profil Masjid';
         return view('profil_form', $data);
     }
 
@@ -67,6 +69,7 @@ class ProfilController extends Controller
     public function show(Profil $profil)
     {
         $data['profil'] = $profil;
+        $data['title'] =  'Detail Masjid';
         return view('profil_show', $data);
     }
 
@@ -78,6 +81,7 @@ class ProfilController extends Controller
         $data['profil'] = $profil;
         $data['route'] = ['profil.update', $profil->id];
         $data['method'] = 'PUT';
+        $data['title'] = 'Tambah Profil Masjid';
 
         // kategori ini akan kita buat berupa pilihan atau select
         $data['listKategori'] = [
