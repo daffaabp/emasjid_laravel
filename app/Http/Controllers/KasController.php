@@ -9,11 +9,26 @@ use Illuminate\Support\Carbon;
 
 class KasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kas = Kas::where('masjid_id', auth()->user()->masjid_id)->latest()->paginate(50);
+        // Query untuk megaktifkan kolom pencarian pada halaman kas_index.blade.php
+        $query = Kas::UserMasjid();
+        if ($request->filled('q')) {
+            $query = $query->where('keterangan', 'LIKE', '%' . $request->q . '%');
+        }
+
+        if ($request->filled('tanggal')) {
+            $query = $query->where('tanggal', $request->tanggal);
+        }
+
+        $kas = $query->latest()->paginate(50);
         $saldoAkhir = Kas::SaldoAkhir();
-        return view('kas_index', compact('kas', 'saldoAkhir'));
+        // untuk menghitung total Pemasukan dan Pengeluaran
+        $totalPemasukan = $kas->where('jenis', 'masuk')->sum('jumlah');
+        $totalPengeluaran = $kas->where('jenis', 'keluar')->sum('jumlah');
+
+        // panggil semua variabel diatas di dalam "compact"
+        return view('kas_index', compact('kas', 'saldoAkhir', 'totalPemasukan', 'totalPengeluaran'));
     }
 
     public function create()
