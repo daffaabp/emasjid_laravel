@@ -12,8 +12,6 @@ use App\Http\Requests\StoreProfilRequest;
 use App\Http\Requests\UpdateProfilRequest;
 use Illuminate\Http\Request;
 
-
-
 class ProfilController extends Controller
 {
     /**
@@ -59,64 +57,61 @@ class ProfilController extends Controller
         // lihat di Profil model
 
         Profil::create($requestData);
-
         flash('Data sudah disimpan');
         return back();
     }
 
-/**
-* Display the specified resource.
-*/
-public function show(Profil $profil)
-{
-    $data['profil'] = $profil;
-    return view('profil_show', $data);
-}
+    /**
+    * Display the specified resource.
+    */
+    public function show(Profil $profil)
+    {
+        $data['profil'] = $profil;
+        return view('profil_show', $data);
+    }
 
-/**
-* Show the form for editing the specified resource.
-*/
-public function edit(Profil $profil) // ini merupakan trik yaitu model bounding
-{
-    $data['profil'] = $profil;
-    $data['route'] = ['profil.update', $profil->id];
-    $data['method'] = 'PUT';
+    /**
+    * Show the form for editing the specified resource.
+    */
+    public function edit(Profil $profil) // ini merupakan trik yaitu model bounding
+    {
+        $data['profil'] = $profil;
+        $data['route'] = ['profil.update', $profil->id];
+        $data['method'] = 'PUT';
 
-    // kategori ini akan kita buat berupa pilihan atau select
-    $data['listKategori'] = [
-        'visi-misi' => 'Visi Misi',
-        'sejarah' => 'Sejarah',
-        'struktur-organisasi' => 'Struktur Organisasi',
-    ];
-    return view('profil_form', $data);
-}
+        // kategori ini akan kita buat berupa pilihan atau select
+        $data['listKategori'] = [
+            'visi-misi' => 'Visi Misi',
+            'sejarah' => 'Sejarah',
+            'struktur-organisasi' => 'Struktur Organisasi',
+        ];
+        return view('profil_form', $data);
+    }
 
-/**
-* Update the specified resource in storage.
-*/
-public function update(Request $request, Profil $profil)
-{
-    $requestData = $request->validate([
-        'kategori' => 'required',
-        'judul' => 'required',
-        'konten' => 'required',
-        ]);
+    /**
+    * Update the specified resource in storage.
+    */
+    public function update(Request $request, Profil $profil)
+    {
+        $requestData = $request->validate([
+            'kategori' => 'required',
+            'judul' => 'required',
+            'konten' => 'required',
+            ]);
 
+        $profil = Profil::findOrFail($profil->id);
+        $profil->update($requestData);
+        flash('Data berhasil diubah.');
+        return back();
+    }
 
-    $profil = Profil::findOrFail($profil->id);
-    $profil->update($requestData);
-
-    flash('Data berhasil diubah.');
-    return back();
-}
-
-/**
-* Remove the specified resource from storage.
-*/
-public function destroy(Profil $profil)
-{
-    $profil->delete();
-    flash('Data sudah dihapus');
-    return back();
-}
+    /**
+    * Remove the specified resource from storage.
+    */
+    public function destroy(Profil $profil)
+    {
+        $profil->delete();
+        flash('Data sudah dihapus');
+        return back();
+    }
 }

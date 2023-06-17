@@ -69,8 +69,6 @@ class KasController extends Controller
 
         $kas = new Kas();
         $kas->fill($requestData);
-        $kas->masjid_id = auth()->user()->masjid_id;
-        $kas->created_by = auth()->user()->id;
         $kas->save();
         auth()->user()->masjid->update(['saldo_akhir' => $saldoAkhir]); // kita mau update saldo akhir yang ada di table masjid
 
