@@ -36,7 +36,7 @@
                 {!! Form::close() !!}
 
                 <div class="table-responsive mt-3">
-                    <table class="table table-striped table-bordered">
+                    <table class="{{ config('app.table_style') }}">
                         <thead>
                             <tr>
                                 <th>ID</th>

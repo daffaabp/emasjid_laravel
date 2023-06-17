@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card-header">
                 <div class="col-md-6 text-right mt-3 mx-3">
-                    <a href="{{ route('kategori.create') }}" class="btn btn-primary">Tambah Kategori Informasi</a>
+                    <a href="{{ route('kategori.create') }}" class="btn btn-primary mb-1 mx-1">Tambah Kategori Informasi</a>
                 </div>
                 <table class="table table-striped">
                     <thead>
