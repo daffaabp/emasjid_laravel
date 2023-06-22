@@ -7,11 +7,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KurbanController;
 use App\Http\Controllers\MasjidController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\MasjidBankController;
 use App\Http\Controllers\UserProfilController;
 use App\Http\Controllers\KurbanHewanController;
+use App\Http\Controllers\KurbanPesertaController;
 use App\Http\Middleware\EnsureDataMasjidCompleted;
 
 /*
@@ -40,6 +42,8 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('masjid', MasjidController::class);
 
     Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
+        Route::resource('kurbanpeserta', KurbanPesertaController::class);
+        Route::resource('peserta', PesertaController::class);
         Route::resource('kurbanhewan', KurbanHewanController::class);
         Route::resource('kurban', KurbanController::class);
         Route::resource('masjidbank', MasjidBankController::class);

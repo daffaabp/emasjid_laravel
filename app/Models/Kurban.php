@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasMasjid;
 use App\Models\KurbanHewan;
 use App\Traits\HasCreatedBy;
+use App\Models\KurbanPeserta;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ConvertContentImageBase64ToUrl;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,4 +32,16 @@ class Kurban extends Model
     {
         return $this->hasMany(KurbanHewan::class);
     }
+
+    // tambahkan relasi hasMany untuk kurbanPeserta
+    /**
+     * Get all of the comments for the Kurban
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function kurbanPeserta(): HasMany
+    {
+    return $this->hasMany(KurbanPeserta::class);
+    }
+
 }
