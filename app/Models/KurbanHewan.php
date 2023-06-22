@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Kurban;
-use App\Traits\HasMasjid;
 use App\Traits\HasCreatedBy;
+use App\Traits\HasMasjid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

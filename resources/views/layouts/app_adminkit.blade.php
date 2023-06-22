@@ -86,7 +86,8 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {{ Route::is('kurban.*') ? 'active' : '' }}">
+                    <li
+                        class="sidebar-item {{ Route::is('kurban.*') ? 'active' : '' }} {{ Route::is('kurbanhewan.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kurban.index') }}">
                             <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data
                                 Kurban</span>
