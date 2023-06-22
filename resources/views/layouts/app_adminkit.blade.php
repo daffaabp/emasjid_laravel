@@ -85,6 +85,13 @@
                                 Bank</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item {{ Route::is('kurban.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('kurban.index') }}">
+                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data
+                                Kurban</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-cta">
