@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Kurban;
-use App\Traits\HasCreatedBy;
 use App\Traits\HasMasjid;
+use App\Traits\HasCreatedBy;
+use App\Models\KurbanPeserta;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class KurbanHewan extends Model
@@ -24,5 +26,16 @@ class KurbanHewan extends Model
     public function kurban()
     {
         return $this->belongsTo(Kurban::class);
+    }
+
+
+    /**
+     * Get all of the comments for the KurbanHewan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function kurbanPeserta(): HasMany
+    {
+        return $this->hasMany(KurbanPeserta::class);
     }
 }

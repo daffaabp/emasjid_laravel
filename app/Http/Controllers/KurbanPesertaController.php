@@ -8,6 +8,7 @@ use App\Models\KurbanHewan;
 use App\Models\KurbanPeserta;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreKurbanPesertaRequest;
+use App\Http\Requests\StorePesertaRequest;
 use App\Http\Requests\UpdateKurbanPesertaRequest;
 
 class KurbanPesertaController extends Controller
@@ -43,34 +44,34 @@ class KurbanPesertaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreKurbanPesertaRequest $request)
-    {
-        $requestData = $request->validated();
-
-        $requestDataPeserta = $requestData;
-        unset($requestDataPeserta['kurban_hewan_id']);
-        unset($requestDataPeserta['status_bayar']);
-        unset($requestDataPeserta['total_bayar']);
-        unset($requestDataPeserta['tanggal_bayar']);
-        unset($requestDataPeserta['kurban_id']);
+    public function store(
+        StoreKurbanPesertaRequest $requestKurbanPeserta, // ini akan menjalankan validasi KurbanPeserta
+        StorePesertaRequest $requestPeserta // ini akan menjalankan validasi Peserta
+    )   {
+        $requestDataPeserta = $requestPeserta->validated();
         DB::beginTransaction();
         $peserta = Peserta::create($requestDataPeserta);
-        if ($request->filled('status_bayar')) {
-            $kurbanHewan = KurbanHewan::userMasjid()->where('id', $request->kurban_hewan_id)->firstOrFail();
-            $dataKurbanPeserta = [
-                'kurban_id' => $kurbanHewan->kurban_id,
-                'kurban_hewan_id' => $kurbanHewan->id,
-                'peserta_id' => $peserta->id,
-                'total_bayar' => $requestData['total_bayar'],
-                'tanggal_bayar' => $requestData['tanggal_bayar'],
-                'status_bayar' => 'Lunas',
-                'metode_bayar' => 'Tunai',
-                'bukti_bayar' => 'OK',
-            ];
-            KurbanPeserta::create($dataKurbanPeserta);
+        $statusBayar = "belum";
+        if ($requestKurbanPeserta->filled('status_bayar')) {
+            $statusBayar = "lunas";
         }
-
+        $requestKurbanPeserta = $requestKurbanPeserta->validated();
+            $kurbanHewan = KurbanHewan::userMasjid()->where('id', $requestKurbanPeserta['kurban_hewan_id'])->firstOrFail();
+            $requestKurbanPeserta['total_bayar'] = $requestKurbanPeserta['total_bayar'] ?? $kurbanHewan->iuran_perorang;
+        $dataKurbanPeserta = [
+            'kurban_id' => $kurbanHewan->kurban_id,
+            'kurban_hewan_id' => $kurbanHewan->id,
+            'peserta_id' => $peserta->id,
+            'total_bayar' => $requestKurbanPeserta['total_bayar'],
+            'tanggal_bayar' => $requestKurbanPeserta['tanggal_bayar'],
+            'status_bayar' => strtolower($statusBayar),
+            'metode_bayar' => 'Tunai',
+            'bukti_bayar' => 'OK',
+        ];
+        KurbanPeserta::create($dataKurbanPeserta);
         DB::commit();
+        flash('Data berhasil disimpan')->success();
+        return back();
     }
 
     /**
@@ -100,8 +101,15 @@ class KurbanPesertaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KurbanPeserta $kurbanPeserta)
+    public function destroy(KurbanPeserta $kurbanpesertum)
     {
-        //
+        // buat kondisi IF, jika data pembayaran sudah lunas maka tidak boleh dihapus
+        if ($kurbanpesertum->status_bayar == 'Lunas') {
+            flash('Data tidak dapat dihapus karena sudah lunas')->error();
+            return back();
+        }
+        $kurbanpesertum->delete();
+        flash('Data berhasil dihapus')->success();
+        return back();
     }
 }

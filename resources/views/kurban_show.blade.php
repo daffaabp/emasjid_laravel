@@ -89,10 +89,11 @@
                             <thead>
                                 <tr>
                                     <td width="1%">NO</td>
-                                    <td>HEWAN</td>
-                                    <td>IURAN</td>
-                                    <td>HARGA</td>
-                                    <td>BIAYA OPERASIONAL</td>
+                                    <td>NAMA</td>
+                                    <td>NOMOR HP</td>
+                                    <td>ALAMAT</td>
+                                    <td>JENIS HEWAN</td>
+                                    <td>STATUS PEMBAYARAN</td>
                                     <td>AKSI</td>
                                 </tr>
                             </thead>
@@ -100,10 +101,26 @@
                                 @foreach ($kurban->kurbanPeserta as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->hewan }} ({{ $item->kriteria }})</td>
-                                        <td>{{ formatRupiah($item->iuran_perorang) }}</td>
-                                        <td>{{ formatRupiah($item->harga) }}</td>
-                                        <td>{{ formatRupiah($item->biaya_operasional) }}</td>
+                                        <td>
+                                            <div>{{ $item->peserta->nama }}</div>
+                                            <div>({{ $item->peserta->nama_tampilan }})</div>
+                                        </td>
+                                        <td>{{ $item->peserta->nohp }}</td>
+                                        <td>{{ $item->peserta->alamat }}</td>
+                                        <td>
+                                            {{ ucwords($item->kurbanHewan->hewan) }} -
+                                            {{ $item->kurbanHewan->kriteria }} -
+                                            {{ formatRupiah($item->kurbanHewan->iuran_perorang) }}
+                                        </td>
+                                        <td>
+                                            @if ($item->status_bayar == 'lunas')
+                                                <span class="badge bg-success me-1 my-1">LUNAS</span>
+                                            @else
+                                                <span class="badge bg-secondary me-1 my-1">BELUM LUNAS</span>
+                                            @endif
+
+
+                                        </td>
                                         <td>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
