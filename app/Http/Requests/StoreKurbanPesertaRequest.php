@@ -34,15 +34,4 @@ class StoreKurbanPesertaRequest extends FormRequest
             'tanggal_bayar' => 'nullable',
         ];
     }
-
-
-
-    protected function prepareForValidation(): void
-    {
-        if ($this->total_bayar != "") {
-            $this->merge([
-                'total_bayar' => str_replace('.', '', $this->total_bayar),
-            ]);
-        }
-    }
 }

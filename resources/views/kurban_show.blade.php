@@ -82,7 +82,8 @@
                     {{-- Jika kondisi Data Kurban masih kosong, maka tampilkan dibawah ini --}}
                     @if ($kurban->kurbanPeserta->count() == 0)
                         <div class="text-center">Belum ada data.
-                            <a href="{{ route('kurbanpeserta.create', ['kurban_id' => $kurban->id]) }}">Buat Baru</a>
+                            <a href="{{ route('kurbanpeserta.create', ['kurban_id' => $kurban->id]) }}">Pendaftaran
+                                Baru</a>
                         </div>
                     @else
                         <table class="table table-striped">
@@ -114,26 +115,30 @@
                                         </td>
                                         <td>
                                             @if ($item->status_bayar == 'lunas')
-                                                <span class="badge bg-success me-1 my-1">LUNAS</span>
+                                                <span
+                                                    class="badge bg-success me-1 my-1">{{ $item->getStatusTeks() }}</span>
                                             @else
-                                                <span class="badge bg-secondary me-1 my-1">BELUM LUNAS</span>
+                                                <span
+                                                    class="badge bg-secondary me-1 my-1">{{ $item->getStatusTeks() }}</span>
                                             @endif
-
-
                                         </td>
                                         <td>
-                                            {!! Form::open([
-                                                'method' => 'DELETE',
-                                                'route' => ['kurbanpeserta.destroy', [$item->id, 'kurban_id' => $item->kurban_id]],
-                                                'style' => 'display:inline',
-                                            ]) !!}
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="{{ route('kurbanpeserta.edit', [$item->id, 'kurban_id' => $item->kurban_id]) }}"
-                                                class="btn btn-sm btn-warning mb-1 mx-1">Edit</a>
-                                            <button type="submit" class="btn btn-sm btn-danger mb-1 mx-1"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus kas ini?')">Hapus</button>
-                                            {!! Form::close() !!}
+                                            @if ($item->status_bayar != 'lunas')
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'route' => ['kurbanpeserta.destroy', [$item->id, 'kurban_id' => $item->kurban_id]],
+                                                    'style' => 'display:inline',
+                                                ]) !!}
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('kurbanpeserta.edit', [$item->id, 'kurban_id' => $item->kurban_id]) }}"
+                                                    class="btn btn-sm btn-warning mb-1 mx-1">Pembayaran Iuran</a>
+                                                <button type="submit" class="btn btn-sm btn-danger mb-1 mx-1"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus kas ini?')">Hapus</button>
+                                                {!! Form::close() !!}
+                                            @else
+                                                Sudah Lunas
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

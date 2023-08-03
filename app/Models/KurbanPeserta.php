@@ -9,6 +9,7 @@ use App\Traits\HasCreatedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use PhpParser\Node\Expr\Cast\String_;
 
 class KurbanPeserta extends Model
 {
@@ -35,5 +36,14 @@ class KurbanPeserta extends Model
     public function kurbanHewan(): BelongsTo
     {
         return $this->belongsTo(KurbanHewan::class);
+    }
+
+    public function getStatusTeks(): String
+    {
+        if ($this->status_bayar == "lunas") {
+            return "Lunas";
+        }else {
+            return "Belum Lunas";
+        }
     }
 }

@@ -85,17 +85,38 @@ class KurbanPesertaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KurbanPeserta $kurbanPeserta)
+    public function edit(KurbanPeserta $kurbanpesertum)
     {
-        //
+        $kurbanpeserta = $kurbanpesertum;
+        $kurban = Kurban::UserMasjid()->where('id', request('kurban_id'))->firstOrFail();
+
+        // tampilkan hewan kurbannya -> ada relasi pada kurban ke hewankurban
+        $data['listKurbanHewan'] = $kurban->kurbanHewan->pluck('nama_full', 'id');
+
+        $data['model'] = $kurbanpeserta;
+        $data['route'] = ['kurbanpeserta.update', $kurbanpeserta->id];
+        $data['method'] = 'PUT';
+        $data['title'] = 'Pembayaran Kurban';
+        $data['kurban'] = $kurban;
+        return view('kurbanpeserta_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKurbanPesertaRequest $request, KurbanPeserta $kurbanPeserta)
+    public function update(UpdateKurbanPesertaRequest $request, $id)
     {
-        //
+        $model = KurbanPeserta::where('id', $id)->where('kurban_id', $request->kurban_id)->firstOrFail();
+        $iuranPerorang = $model->kurbanHewan->iuran_perorang;
+        $totalBayar = $request->total_bayar;
+        if ($iuranPerorang > $totalBayar) {
+            flash('Total bayar tidak boleh kurang dari iuran perorang')->error();
+            return back();
+        }
+        $model->status_bayar = 'lunas';
+        $model->update($request->validated());
+        flash('Data berhasil di update')->success();
+        return back();
     }
 
     /**

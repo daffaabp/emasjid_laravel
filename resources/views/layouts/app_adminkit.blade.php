@@ -46,42 +46,42 @@
 
                     <li class="sidebar-item {{ Route::is('masjid.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('masjid.create') }}">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data
+                            <i class="align-middle" data-feather="archive"></i> <span class="align-middle">Data
                                 Masjid</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Route::is('kas.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kas.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Kas
+                            <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Kas
                                 Masjid</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Route::is('profil.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('profil.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Profil
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profil
                                 Masjid</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Route::is('kategori.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kategori.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Kategori
+                            <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Kategori
                                 Informasi</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Route::is('informasi.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('informasi.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Informasi
+                            <i class="align-middle" data-feather="server"></i> <span class="align-middle">Informasi
                                 Masjid</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item {{ Route::is('masjidbank.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('masjidbank.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data
+                            <i class="align-middle" data-feather="award"></i> <span class="align-middle">Data
                                 Bank</span>
                         </a>
                     </li>
@@ -89,7 +89,7 @@
                     <li
                         class="sidebar-item {{ Route::is('kurban.*') ? 'active' : '' }} {{ Route::is('kurbanhewan.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('kurban.index') }}">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data
+                            <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Data
                                 Kurban</span>
                         </a>
                     </li>

@@ -25,7 +25,7 @@
 
                     <div class="form-group mb-3">
                         {!! Form::label('judul', 'Judul') !!}
-                        {!! Form::text('judul', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('judul', null, ['clas-s' => 'form-control']) !!}
                         <span class="text-danger">{{ $errors->first('judul') }}</span>
                     </div>
 
