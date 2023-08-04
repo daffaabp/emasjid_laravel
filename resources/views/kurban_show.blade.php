@@ -6,7 +6,12 @@
         <div class="col-12">
             <div class="card-header">
                 <div class="card-body">
-                    <h3>Tahun Kurban {{ $kurban->tahun_hijriah . '/' . $kurban->tahun_masehi }}</h3>
+
+                    <div class="d-flex justify-content-between">
+                        <h3>Tahun Kurban {{ $kurban->tahun_hijriah . '/' . $kurban->tahun_masehi }}</h3>
+                        <a href="{{ route('kurban.show', [$kurban->id, 'output' => 'laporan']) }}" target="blank"><i
+                                class="align-middle" data-feather="file-text"></i>Laporan Peserta Kurban</a>
+                    </div>
                     <h6>
                         <i class="align-middle" data-feather="calendar"></i>Tanggal Akhir Pendaftaran:
                         <b>{{ $kurban->tanggal_akhir_pendaftaran->format('d-m-Y') }}</b>
