@@ -8,30 +8,34 @@
                 {!! Form::open([
                     'url' => url()->current(),
                     'method' => 'GET',
-                    'class' => 'row row-cols-lg-auto align-items-center',
                 ]) !!}
 
                 {{-- Bootstrap 5.2 Horizontal Form --}}
-
-                <div class="col-auto">
-                    <a href="{{ route('kas.create') }}" class="btn btn-primary">Tambah Data Kas</a>
-                </div>
-
-                <div class="col-auto ms-auto">
-                    <label for="inlineFormInputGroupUsername">Tanggal Transaksi</label>
-                    {!! Form::date('tanggal', request('tanggal'), ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="col-auto">
-                    <label for="inlineFormSelectPref">Keterangan Transaksi</label>
-                    {!! Form::text('q', request('q'), [
-                        'class' => 'form-control',
-                        'placeholder' => 'Keterangan Transaksi',
-                    ]) !!}
-                </div>
-
-                <div class="col-auto mt-3">
-                    <button type="submit" class="btn btn-primary">Cari</button>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto bd-highlight">
+                        <a href="{{ route('kas.create') }}" class="btn btn-primary">Tambah Data Kas</a>
+                    </div>
+                    <div class="bd-highlight mx-1">
+                        {!! Form::date('tanggal_mulai', request('tanggal_mulai'), [
+                            'class' => 'form-control',
+                            'placeholder' => 'Tanggal Transaksi',
+                        ]) !!}
+                    </div>
+                    <div class="bd-highlight mx-1">
+                        {!! Form::date('tanggal_selesai', request('tanggal_selesai'), [
+                            'class' => 'form-control',
+                            'placeholder' => 'Tanggal Transaksi',
+                        ]) !!}
+                    </div>
+                    <div class="bd-highlight me-1">
+                        {!! Form::text('q', request('q'), [
+                            'class' => 'form-control',
+                            'placeholder' => 'Keterangan Transaksi',
+                        ]) !!}
+                    </div>
+                    <div class="bd-highlight">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                    </div>
                 </div>
                 {!! Form::close() !!}
 
@@ -40,9 +44,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tanggal</th>
                                 <th>Diinputkan Oleh</th>
-                                <th>Kategori</th>
+                                <th>Tanggal</th>
                                 <th>Keterangan</th>
                                 <th class="text-end">Pemasukkan</th>
                                 <th class="text-end">Pengeluaran</th>
@@ -53,9 +56,8 @@
                             @foreach ($kas as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->tanggal->translatedFormat('d-m-Y') }}</td>
                                     <td>{{ $item->createdBy->name }}</td>
-                                    <td>{{ $item->kategori ?? 'Umum' }}</td>
+                                    <td>{{ $item->tanggal->translatedFormat('d-m-Y') }}</td>
                                     <td>{{ $item->keterangan }}</td>
                                     <td class="text-end">
                                         {{ $item->jenis == 'masuk' ? formatRupiah($item->jumlah) : '-' }}
