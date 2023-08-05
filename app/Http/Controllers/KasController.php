@@ -30,6 +30,10 @@ class KasController extends Controller
         $totalPemasukan = $kas->where('jenis', 'masuk')->sum('jumlah');
         $totalPengeluaran = $kas->where('jenis', 'keluar')->sum('jumlah');
 
+        if($request->page == 'laporan') {
+            return view('kas_laporan', compact('kas', 'saldoAkhir', 'totalPemasukan', 'totalPengeluaran'));
+        }
+
         // panggil semua variabel diatas di dalam "compact"
         return view('kas_index', compact('kas', 'saldoAkhir', 'totalPemasukan', 'totalPengeluaran'));
     }

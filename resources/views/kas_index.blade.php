@@ -1,4 +1,18 @@
 @extends('layouts.app_adminkit')
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $("#cetak").click(function(e) {
+                var tanggalMulai = $("#tanggal_mulai").val();
+                var tanggalSelesai = $("#tanggal_selesai").val();
+                var q = $("#q").val();
+                params = "?page=laporan&tanggal_mulai=" + tanggalMulai + "&tanggal_selesai=" +
+                    tanggalSelesai + "&q=" + q;
+                window.open("/kas" + params, "_blank");
+            })
+        });
+    </script>
+@endsection
 
 @section('content')
     <h1 class="h3 mb-3">Kas Masjid</h1>
@@ -11,30 +25,39 @@
                 ]) !!}
 
                 {{-- Bootstrap 5.2 Horizontal Form --}}
-                <div class="d-flex bd-highlight mb-3">
+                <div class="d-flex bd-highlight mb-3 align-items-center">
                     <div class="me-auto bd-highlight">
                         <a href="{{ route('kas.create') }}" class="btn btn-primary">Tambah Data Kas</a>
                     </div>
                     <div class="bd-highlight mx-1">
+                        {!! Form::label('tm', 'Tanggal Mulai', []) !!}
                         {!! Form::date('tanggal_mulai', request('tanggal_mulai'), [
                             'class' => 'form-control',
-                            'placeholder' => 'Tanggal Transaksi',
+                            'placeholder' => 'Tanggal Mulai',
+                            'id' => 'tanggal_mulai',
                         ]) !!}
                     </div>
                     <div class="bd-highlight mx-1">
+                        {!! Form::label('tm', 'Tanggal Selesai', []) !!}
                         {!! Form::date('tanggal_selesai', request('tanggal_selesai'), [
                             'class' => 'form-control',
-                            'placeholder' => 'Tanggal Transaksi',
+                            'placeholder' => 'Tanggal Selesai',
+                            'id' => 'tanggal_selesai',
                         ]) !!}
                     </div>
                     <div class="bd-highlight me-1">
+                        {!! Form::label('tm', 'Keterangan', []) !!}
                         {!! Form::text('q', request('q'), [
                             'class' => 'form-control',
                             'placeholder' => 'Keterangan Transaksi',
+                            'id' => 'q',
                         ]) !!}
                     </div>
                     <div class="bd-highlight">
-                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <button type="submit" class="btn btn-primary mt-3"
+                            style="margin-top:20px !important;">Cari</button>
+                        <button target="blank" type="button" class="btn btn-primary mt-3"
+                            style="margin-top:20px !important;" id="cetak">Cetak Laporan </button>
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -43,7 +66,7 @@
                     <table class="{{ config('app.table_style') }}">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Diinputkan Oleh</th>
                                 <th>Tanggal</th>
                                 <th>Keterangan</th>
@@ -55,7 +78,7 @@
                         <tbody>
                             @foreach ($kas as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->createdBy->name }}</td>
                                     <td>{{ $item->tanggal->translatedFormat('d-m-Y') }}</td>
                                     <td>{{ $item->keterangan }}</td>
@@ -86,7 +109,7 @@
                         {{-- Penambahan Footer untuk menampilkan Total Jumlah --}}
                         <tfoot>
                             <tr>
-                                <td colspan="5" class="text-center fw-bold">TOTAL</td>
+                                <td colspan="4" class="text-center fw-bold">TOTAL</td>
                                 <td class="text-end">{{ formatRupiah($totalPemasukan) }}</td>
                                 <td class="text-end">{{ formatRupiah($totalPengeluaran) }}</td>
                             </tr>
